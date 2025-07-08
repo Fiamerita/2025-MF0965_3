@@ -31,16 +31,38 @@ class WorldUI:
             self.tree.insert('', tk.END, values=cust)
 
     def _on_add(self):
-        add_win = tk.Toplevel(self.root)
-        add_win.title("Añadir nuevo país")
+        return self.formulario()
+
 
     def _on_edit(self):
         sel = self.tree.focus()
         if not sel:
             messagebox.showwarning("Editar", "Seleccione un cliente")
             return
-        data = self.tree.item(sel, 'values')
-        messagebox.showinfo("Editar", f"Implementar edición de {data}")
+        self.formulario()
+    
+    def formulario(self):
+        add_win = tk.Toplevel(self.root)
+        add_win.title("Añadir nuevo país")
+        fields = ['Code', 'Nombre','Continente','Region','Area','IndepYear', 'Población', 'ExpecVida', 'GNP', 'GNPOld', 'NombreLocal', 'FormaGob', 'Alcalde', 'capital', 'Code2']
+        entries = {}
+        for i, field in enumerate(fields):
+            tk.Label(add_win, text=field).grid(row=i, column=0, sticky=tk.W, padx=5, pady=2)
+            entry = tk.Entry(add_win)
+            entry.grid(row=i, column=1, padx=5, pady=2)
+            entries[field] = entry
+
+        def save():
+            values = [entries[f].get() for f in fields]
+            if not values[0]:
+                messagebox.showwarning("Error", "El campo 'Code' es obligatorio")
+                return
+            self.service.add_customer(tuple(values))
+            self._load_customers()
+            add_win.destroy()
+
+        tk.Button(add_win, text="Guardar", command=save).grid(row=len(fields), column=0, columnspan=2, pady=10)
+
 
     def _on_delete(self):
         sel = self.tree.focus()

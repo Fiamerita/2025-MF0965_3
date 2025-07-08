@@ -4,7 +4,7 @@ from db import get_connection
 class CustomerRepository:
     def fetch_all(self):
         query = """
-SELECT 
+SELECT   
     country.Code, 
     country.Name, 
     country.Population,
