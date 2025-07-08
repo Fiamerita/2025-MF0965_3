@@ -12,7 +12,7 @@ class WorldUI:
         self._load_customers()
 
     def _build_ui(self):
-        cols = ('Code', 'Nombre','Poblacion')
+        cols = ('Code', 'Nombre', 'Poblacion', 'Capital', 'Poblacion capital')
         self.tree = ttk.Treeview(self.root, columns=cols, show='headings')
         for col in cols:
             self.tree.heading(col, text=col)
@@ -20,10 +20,9 @@ class WorldUI:
         self.tree.pack(fill=tk.BOTH, expand=True)
 
         frm = tk.Frame(self.root); frm.pack(pady=10)
-        tk.Button(frm, text="Refrescar", command=self._load_customers).pack(side=tk.LEFT, padx=5)
         tk.Button(frm, text="Añadir",    command=self._on_add).pack(side=tk.LEFT, padx=5)
         tk.Button(frm, text="Editar",    command=self._on_edit).pack(side=tk.LEFT, padx=5)
-        tk.Button(frm, text="Eliminar",  command=self._on_delete).pack(side=tk.LEFT, padx=5)
+    
 
     def _load_customers(self):
         for row in self.tree.get_children():
@@ -32,7 +31,8 @@ class WorldUI:
             self.tree.insert('', tk.END, values=cust)
 
     def _on_add(self):
-        messagebox.showinfo("Añadir", "Implementar formulario de alta aquí")
+        add_win = tk.Toplevel(self.root)
+        add_win.title("Añadir nuevo país")
 
     def _on_edit(self):
         sel = self.tree.focus()

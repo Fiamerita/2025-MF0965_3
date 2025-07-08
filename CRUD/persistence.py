@@ -4,11 +4,17 @@ from db import get_connection
 class CustomerRepository:
     def fetch_all(self):
         query = """
-        SELECT Code, Name, Population
-        FROM world.country;
-          FROM customer c
-          JOIN address a     ON c.address_id = a.address_id
-          JOIN city    city  ON a.city_id = city.city_id;
+SELECT 
+    country.Code, 
+    country.Name, 
+    country.Population,
+    city.Name AS Capital,
+    city.Population AS Poblacion_Capital
+FROM 
+    country
+JOIN 
+    city ON city.ID = country.Capital;
+        
         """
         conn = get_connection()
         cursor = conn.cursor()
