@@ -1,7 +1,7 @@
 DB_CONFIG = {
     'host':     'localhost',
-    'database': 'sakila',
+    'database': 'world',
     'user':     'root',
-    'password': 'krono',
+    'password': '123456',
     'port':     3306
 }
